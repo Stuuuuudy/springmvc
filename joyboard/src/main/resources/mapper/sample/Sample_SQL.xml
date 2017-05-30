@@ -4,15 +4,61 @@
 <mapper namespace="sample">
     <select id="selectBoardList" parameterType="hashmap" resultType="hashmap">
         <![CDATA[
-
             SELECT
-                *
+                title,
+                id,
+                hits,
+                created_at
             FROM
                 board
             WHERE
                 deleted = 'N'
             ORDER BY id DESC
-
         ]]>
     </select>
+
+    <insert id="insertBoard" parameterType="hashmap">
+        <![CDATA[
+        INSERT INTO board
+        (
+        title,
+        contents,
+        created_at,
+        writer
+        ) VALUES
+        (
+        #{TITLE},
+        #{CONTENTS},
+        now(),
+        'Admin'
+        )
+        ]]>
+    </insert>
+
+    <update id="updateHitCount" parameterType="hashmap">
+        <![CDATA[
+        UPDATE board
+        SET
+        hits = IFNULL(hits,0) + 1
+        WHERE
+        id = #{IDX}
+        ]]>
+    </update>
+
+    <select id="selectBoardDetail" parameterType="hashmap" resultType="hashmap">
+        <![CDATA[
+        SELECT
+        title,
+        id,
+        hits,
+        created_at,
+        id,
+        contents,
+        writer
+        FROM
+        board
+        WHERE
+        id = #{IDX}
+        ]]>
+  </select>
 </mapper>
