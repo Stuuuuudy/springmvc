@@ -61,4 +61,25 @@
         id = #{IDX}
         ]]>
   </select>
+
+    <update id="updateBoard" parameterType="hashMap">
+        <![CDATA[
+        UPDATE board
+        SET
+          title = #{TITLE},
+          contents = #{CONTENTS}
+        WHERE
+          id = #{IDX}
+          ]]>
+    </update>
+
+    <delete id="deleteBoard" parameterType="hashMap">
+        <![CDATA[
+          UPDATE board
+          SET
+            deleted = 'Y'
+          WHERE
+            id = #{IDX}
+        ]]>
+    </delete>
 </mapper>
